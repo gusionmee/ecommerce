@@ -1,46 +1,46 @@
 package com.api.apiblog.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
-import java.util.Objects;
+import java.util.Set;
 
 @Entity
-@Table(name = "users", schema = "blogapi", catalog = "")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "Users", schema = "commerce", catalog = "")
 public class UsersEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "id")
-    private Long id;
-    @Basic
-    @Column(name = "first_name")
-    private String firstName;
-    @Basic
-    @Column(name = "last_name")
-    private String lastName;
-    @Basic
-    @Column(name = "username")
-    private String username;
-    @Basic
-    @Column(name = "password")
-    private String password;
     @Basic
     @Column(name = "email")
     private String email;
     @Basic
-    @Column(name = "address_id")
-    private Object addressId;
+    @Column(name = "FistName")
+    private String fistName;
     @Basic
-    @Column(name = "phone")
-    private String phone;
+    @Column(name = "LastName")
+    private String lastName;
     @Basic
-    @Column(name = "website")
-    private String website;
+    @Column(name = "Mobile")
+    private String mobile;
     @Basic
-    @Column(name = "company_id")
-    private Object companyId;
-    @Basic
-    @Column(name = "created_at")
-    private Timestamp createdAt;
-
+    @Column(name = "Pass")
+    private String pass;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "id")
+    private long id;
+    @ManyToMany
+    @JoinTable(
+            name = "Users_Andress",
+            joinColumns = @JoinColumn(name = "Users_id"),
+            inverseJoinColumns = @JoinColumn(name = "Andress_id")
+    )
+    Set<AndressEntity> andressEntity;
+    @ManyToMany(mappedBy = "usersEntity")
+    Set<RolesEntity> rolesEntities;
+    @OneToMany(mappedBy = "usersEntity")
+    private Set<CartsEntity> cartsEntities;
 }
